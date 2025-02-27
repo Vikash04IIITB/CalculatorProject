@@ -10,7 +10,7 @@ pipeline {
 
         stage('Compile Code') {
             steps {
-                sh 'javac -cp .:junit-jupiter-api-5.7.1.jar Calculator.java CalculatorTest.java'
+                sh 'javac -cp .:junit-platform-console-standalone-1.7.1.jar:junit-jupiter-api-5.7.1.jar:junit-jupiter-engine-5.7.1.jar:apiguardian-api-1.1.0.jar Calculator.java CalculatorTest.java'
             }
         }
 
