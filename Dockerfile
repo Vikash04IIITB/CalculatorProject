@@ -1,5 +1,6 @@
 # Step 1: Base image use karo
-FROM openjdk:11
+FROM openjdk:11-jdk-slim
+
 
 # Step 2: Working directory set karo
 WORKDIR /app
