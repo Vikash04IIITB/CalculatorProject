@@ -1,5 +1,6 @@
 # Step 1: Base image use karo
-FROM openjdk:11-jdk-slim
+FROM --platform=linux/amd64 openjdk:11-jdk-slim
+
 
 
 # Step 2: Working directory set karo
