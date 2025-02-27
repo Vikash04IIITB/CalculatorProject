@@ -14,7 +14,8 @@ COPY . /app
 RUN apt-get update && apt-get install -y curl unzip
 
 # Step 6: Project ko compile karo (JUnit latest version ke saath)
-RUN javac -Xlint:-options -cp .:junit-jupiter-api-5.9.3.jar Calculator.java CalculatorTest.java
+RUN javac -cp .:junit-jupiter-api-5.9.3.jar Calculator.java CalculatorTest.java
+
 
 # Step 7: CMD me application run karne ka command likho
 CMD ["java", "-cp", ".:junit-platform-console-standalone-1.9.3.jar:junit-jupiter-api-5.9.3.jar:junit-jupiter-engine-5.9.3.jar:apiguardian-api-1.1.0.jar", "org.junit.platform.console.ConsoleLauncher", "--select-class", "CalculatorTest"]
