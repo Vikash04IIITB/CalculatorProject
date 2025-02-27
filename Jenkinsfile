@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -8,15 +8,15 @@ pipeline {
             }
         }
 
-        stage('Compile Code') {
+        stage('Build Docker Image') {
             steps {
-                sh 'javac -cp .:junit-platform-console-standalone-1.7.1.jar:junit-jupiter-api-5.7.1.jar:junit-jupiter-engine-5.7.1.jar:apiguardian-api-1.1.0.jar Calculator.java CalculatorTest.java'
+                sh 'docker build -t calculator-app .'
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Docker Container') {
             steps {
-                sh 'java -cp .:junit-platform-console-standalone-1.7.1.jar:junit-jupiter-api-5.7.1.jar:junit-jupiter-engine-5.7.1.jar:apiguardian-api-1.1.0.jar org.junit.platform.console.ConsoleLauncher --select-class CalculatorTest'
+                sh 'docker run --rm calculator-app'
             }
         }
     }
