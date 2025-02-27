@@ -1,14 +1,20 @@
-# Step 1: Base image use karo
-FROM --platform=linux/amd64 openjdk:11-jdk-slim
+# Step 1: Use base image
+FROM openjdk:11-jdk-slim
 
-# Step 2: Working directory set karo
+# Step 2: Set working directory
 WORKDIR /app
 
-# Step 3: Project ke sabhi files copy karo
+# Step 3: Copy project files
 COPY . /app
 
-# Step 4: Project ko compile karo (JUnit dependencies ke saath)
-RUN javac -cp ".:junit-jupiter-api-5.9.3.jar:junit-jupiter-engine-5.9.3.jar:junit-platform-console-standalone-1.9.3.jar:apiguardian-api-1.1.0.jar" Calculator.java CalculatorTest.java
+# Step 4: Install dependencies
+RUN apt-get update && apt-get install -y curl unzip && rm -rf /var/lib/apt/lists/*
 
-# Step 5: CMD me application run karne ka command likho
-CMD ["java", "-cp", ".:junit-platform-console-standalone-1.9.3.jar:junit-jupiter-api-5.9.3.jar:junit-jupiter-engine-5.9.3.jar:apiguardian-api-1.1.0.jar", "org.junit.platform.console.ConsoleLauncher", "--select-class", "CalculatorTest"]
+# Step 5: Download JUnit dependencies
+RUN curl -o junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
+
+# Step 6: Compile Java files
+RUN javac -cp ".:junit-platform-console-standalone.jar" Calculator.java CalculatorTest.java
+
+# Step 7: Run JUnit tests
+CMD ["java", "-cp", ".:junit-platform-console-standalone.jar", "org.junit.platform.console.ConsoleLauncher", "--select-class", "CalculatorTest"]
