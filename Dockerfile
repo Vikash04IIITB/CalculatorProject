@@ -14,7 +14,8 @@ COPY . /app
 RUN apt-get update && apt-get install -y curl unzip
 
 # Step 6: Project ko compile karo (JUnit latest version ke saath)
-RUN export JAVA_TOOL_OPTIONS=""; javac -cp .:junit-jupiter-api-5.9.3.jar Calculator.java CalculatorTest.java
+RUN javac -cp ".:junit-jupiter-api-5.9.3.jar:junit-jupiter-engine-5.9.3.jar:junit-platform-console-standalone-1.9.3.jar:apiguardian-api-1.1.0.jar" Calculator.java CalculatorTest.java
+
 
 
 
